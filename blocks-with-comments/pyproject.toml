@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "blocks-with-comments"
+version = "0.1.0"
+description = "Datapane Component: Blocks with Comments"
+authors = ["Dr. Shahin Rostami <hello@shahinrostami.com>"]
+
+[tool.poetry.dependencies]
+python = ">=3.8,<3.11.0"
+datapane = {path = "/Users/shahin/Documents/datapane-hosted/python-client", develop = true}
+jupyterlab = "^3.4.3"
+sqlalchemy = "^1.4.46"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
