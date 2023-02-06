@@ -40,15 +40,12 @@ def upload_dataset(params):
             dp.Function(
                 plot_dataset,
                 target="plot",
-                swap=dp.Swap.INNER,
                 submit_label="Plot",
                 controls=plot_controls,
             ),
             dp.Empty(name="plot"),
             columns=2,
         ),
-            label="Explore",
-            name="dataset",
     )
 
 
@@ -71,6 +68,7 @@ upload_and_display = dp.View(
                     upload_dataset,
                     target="dataset",
                     submit_label="Upload",
+                    swap=dp.Swap.INNER,
                     controls=controls,
                 ),
                 label="Upload dataset",
