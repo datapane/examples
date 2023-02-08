@@ -30,7 +30,7 @@ Hi there! 👋
 
 This repository contains a collection of examples that demonstrate how to use Datapane to create and share data apps.
 
-We're here to help you get up and running with Datapane. Check out the [Datapane quickstart repo](https://github.com/datapane/dp-quickstart/edit/codespace-shahinrostami-cuddly-acorn-pj9grq544pxhrjp7/README.md) to get started, or visit any of the resources below.
+We're here to help you get up and running with Datapane. Check out the [Datapane quickstart repo](https://github.com/datapane/dp-quickstart/) to get started, or visit any of the resources below.
 
 ## Resources
 
