@@ -6,7 +6,7 @@ authors = ["Dr. Shahin Rostami <hello@shahinrostami.com>"]
 
 [tool.poetry.dependencies]
 python = ">=3.8,<3.11.0"
-datapane = {path = "/Users/shahin/Documents/datapane-hosted/python-client", develop = true}
+datapane = {url = "https://datapane-cdn.com/python-client/dev/datapane--py3-none-any.whl"}
 altair = "^4.2.0"
 scikit-learn = "^1.1.1"
 jupyterlab = "^3.4.3"

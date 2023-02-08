@@ -1,0 +1,3 @@
+https://datapane-cdn.com/python-client/dev/datapane--py3-none-any.whl
+jupyterlab>=3.4.3,<4.0.0
+sqlalchemy>=1.4.46,<2.0.0
