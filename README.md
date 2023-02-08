@@ -30,9 +30,13 @@ Hi there! 👋
 
 This repository contains a collection of examples that demonstrate how to use Datapane to create and share data apps.
 
-We're here to help you get up and running with Datapane. Check out the [Datapane quickstart repo](https://github.com/datapane/dp-quickstart/) to get started, or visit any of the resources below.
+1. Run `pip install -r requirements.py` from an app example folder to install dependencies.
+2. Either run `app.ipynb` through Jupyter Lab, or `app.py` with `python app.py`, depending on the format of the app example.
+3. Visit the URL printed to the terminal/cell output, usually http://127.0.0.1:8080.
 
 ## Resources
+
+We're here to help you get up and running with Datapane. Check out the [Datapane quickstart repo](https://github.com/datapane/dp-quickstart/) to get started, or visit any of the resources below.
 
 - [Join Discord](https://chat.datapane.com)
 - [Sign up for a free account](https://datapane.com/accounts/signup)
