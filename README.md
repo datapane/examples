@@ -31,8 +31,10 @@ Hi there! 👋
 This repository contains a collection of examples that demonstrate how to use Datapane to create and share data apps.
 
 1. Run `pip install -r requirements.py` from an app example folder to install dependencies.
-2. Either run `app.ipynb` through Jupyter Lab, or `app.py` with `python app.py`, depending on the format of the app example.
-3. Visit the URL printed to the terminal/cell output, usually http://127.0.0.1:8080.
+2. Depending on the format of the example, either run:
+   - the notebook `app.ipynb` through Jupyter Lab, 
+   - the script `app.py` (e.g. with `python app.py`).
+4. Visit the URL printed to the terminal/cell output, usually http://127.0.0.1:8080.
 
 ## Resources
 
