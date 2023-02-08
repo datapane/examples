@@ -8,7 +8,7 @@ packages = [{include = "hacker_news_feed"}]
 
 [tool.poetry.dependencies]
 python = ">=3.8,<3.11.0"
-datapane = {url = "https://datapane-cdn.com/python-client-dev/datapane--py3-none-any.whl?cache-bust=55345"}
+datapane = {url = "https://datapane-cdn.com/python-client/dev/datapane--py3-none-any.whl"}
 
 
 [build-system]

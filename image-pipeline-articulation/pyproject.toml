@@ -12,7 +12,7 @@ jupyterlab = "^3.4.3"
 matplotlib = "^3.5.2"
 scikit-image = "^0.19.3"
 pooch = "^1.6.0"
-datapane = {url = "https://datapane-cdn.com/python-client-dev/datapane--py3-none-any.whl?cache-bust=55345"}
+datapane = {url = "https://datapane-cdn.com/python-client/dev/datapane--py3-none-any.whl"}
 
 [tool.poetry.dev-dependencies]
 

@@ -9,7 +9,7 @@ packages = [{include = "background_remover"}]
 [tool.poetry.dependencies]
 python = ">=3.8,<3.11.0"
 rembg = "^2.0.30"
-datapane = {url = "https://datapane-cdn.com/python-client-dev/datapane--py3-none-any.whl?cache-bust=55345"}
+datapane = {url = "https://datapane-cdn.com/python-client/dev/datapane--py3-none-any.whl"}
 
 
 [build-system]
