@@ -37,7 +37,7 @@ for idx, post in enumerate(posts):
                 target="view_post",
                 submit_label="View",
                 controls=dp.Controls(
-                    dp.TextBox("post_id", idx, default=idx),
+                    dp.TextBox("post_id", idx, initial=idx),
                 ),
             ),
             columns=2,

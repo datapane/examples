@@ -42,12 +42,12 @@ def f(params):
         )
 
 controls = dp.MultiChoice("countries", 
-    default=["China", "United States of America"], 
+    initial=["China", "United States of America"], 
     options=list(df.index)
 )
 
 v = dp.View(
-    dp.Interactive(f, target='xyz', controls=dp.Controls(controls)),
+    dp.Function(f, target='xyz', controls=dp.Controls(controls)),
     dp.Empty(name='xyz')
 )
 

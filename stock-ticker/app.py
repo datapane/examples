@@ -36,7 +36,7 @@ def f(params):
 
 
 controls = dp.Controls(
-    dp.TextBox("ticker", "Stock Ticker (e.g. AMZN, WMT, AAPL, ^DJI)", default="^DJI")
+    dp.TextBox("ticker", "Stock Ticker (e.g. AMZN, WMT, AAPL, ^DJI)", initial="^DJI")
 )
 
 v = dp.View(dp.Function(f, target="xyz", controls=controls), dp.Empty(name="xyz"))

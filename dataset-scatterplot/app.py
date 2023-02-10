@@ -29,9 +29,9 @@ def upload_dataset(params):
     columns = list(dataset.columns)
 
     plot_controls = dp.Controls(
-        dp.Choice("x_axis", options=columns, default=columns[0]),
-        dp.Choice("y_axis", options=columns, default=columns[0]),
-        dp.Choice("color", options=columns, default=columns[0]),
+        dp.Choice("x_axis", options=columns, initial=columns[0]),
+        dp.Choice("y_axis", options=columns, initial=columns[0]),
+        dp.Choice("color", options=columns, initial=columns[0]),
     )
 
     return dp.Group(

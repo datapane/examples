@@ -23,7 +23,7 @@ def withAuth(app, correct_pw, ref = None):
 
     controls = dp.TextBox("password", "Enter your password")
 
-    return dp.Interactive(
+    return dp.Function(
         lambda params: password_protect(app, correct_pw, params['password'], ref), 
         controls=dp.Controls(controls),
         target=ref,
