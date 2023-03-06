@@ -1,4 +1,0 @@
-https://datapane-cdn.com/python-client/dev/datapane--py3-none-any.whl
-scikit-learn>=1.1.1,<2.0.0
-jupyterlab>=3.0.0,<4.0.0
-matplotlib>=3.5.2,<4.0.0

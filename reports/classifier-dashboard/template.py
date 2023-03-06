@@ -13,7 +13,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score
-plt.ioff();
+
+plt.ioff()
 
 
 # ## Wrangling and visualisation functions
@@ -31,9 +32,7 @@ def predictions_to_df(id_test, y_test, predictions):
         index=id_test,
     )
 
-    df_predictions["true positive"] = (
-        df_predictions["true class"] == df_predictions["predicted class"]
-    )
+    df_predictions["true positive"] = df_predictions["true class"] == df_predictions["predicted class"]
     return df_predictions
 
 
@@ -62,9 +61,7 @@ def plot_banner(X_test, y_test):
     for ax, image, truth in zip(axes.flatten(), np.array(X_test), y_test):
         ax.set_axis_off()
         image = image.reshape(8, 8)
-        ax.imshow(
-            image, cmap=plt.cm.get_cmap(cm_sequential[truth]), interpolation="nearest"
-        )
+        ax.imshow(image, cmap=plt.cm.get_cmap(cm_sequential[truth]), interpolation="nearest")
     plt_banner.tight_layout()
     plt.close()
     return plt_banner
@@ -105,9 +102,7 @@ def plot_confusion_matrix(y_test, predictions, class_labels):
 
 def plot_preview(X_test, predictions, y_test):
     fig, axes = plt.subplots(ncols=16, nrows=14, figsize=(11, 10))
-    for ax, image, prediction, truth in zip(
-        axes.flatten(), np.array(X_test), predictions, y_test
-    ):
+    for ax, image, prediction, truth in zip(axes.flatten(), np.array(X_test), predictions, y_test):
         ax.set_axis_off()
         image = image.reshape(8, 8)
         if prediction == truth:
@@ -163,15 +158,11 @@ def build_metrics_group(y_test, predictions):
     metrics_block = dp.Group(
         dp.BigNumber(
             "Precision",
-            value="{:.2f}".format(
-                precision_score(y_test, predictions, average="weighted")
-            ),
+            value="{:.2f}".format(precision_score(y_test, predictions, average="weighted")),
         ),
         dp.BigNumber(
             "Recall",
-            value="{:.2f}".format(
-                recall_score(y_test, predictions, average="weighted")
-            ),
+            value="{:.2f}".format(recall_score(y_test, predictions, average="weighted")),
         ),
         dp.BigNumber(
             "F1-score",
@@ -284,10 +275,8 @@ v = dp.Blocks(
     banner_block,
     "# Classifier Performance Dashboard",
     "This dashboard highlights the performance of multiple classifiers on the [Optical Recognition of Handwritten Digits Data Set](https://archive.ics.uci.edu/ml/datasets/Optical+Recognition+of+Handwritten+Digits).",
-    
     # performance overview
     trade_offs_block,
-    
     # performance breakdown page per classifier
     dp.Select(
         blocks=classifier_pages.values(),
@@ -296,4 +285,3 @@ v = dp.Blocks(
 )
 
 dp.save_report(v, path="template.html", open=True)
-

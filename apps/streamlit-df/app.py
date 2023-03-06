@@ -7,9 +7,10 @@ import altair as alt
 AWS_BUCKET_URL = "http://streamlit-demo-data.s3-us-west-2.amazonaws.com"
 df = pd.read_csv(AWS_BUCKET_URL + "/agri.csv.gz")
 df = df.set_index("Region")
-   
+
+
 def f(params):
-    countries = params['countries']
+    countries = params["countries"]
 
     if not countries:
         return dp.Text("Please select at least one country.")
@@ -33,22 +34,17 @@ def f(params):
                 color="Region:N",
             )
         )
-    
+
         return dp.Group(
-            "### Gross Agricultural Production ($B)", 
+            "### Gross Agricultural Production ($B)",
             dp.Table(table_data),
             chart,
-            name='xyz'
+            name="xyz",
         )
 
-controls = dp.MultiChoice("countries", 
-    initial=["China", "United States of America"], 
-    options=list(df.index)
-)
 
-v = dp.View(
-    dp.Function(f, target='xyz', controls=dp.Controls(controls)),
-    dp.Empty(name='xyz')
-)
+controls = dp.MultiChoice("countries", initial=["China", "United States of America"], options=list(df.index))
+
+v = dp.View(dp.Function(f, target="xyz", controls=dp.Controls(controls)), dp.Empty(name="xyz"))
 
 dp.serve(v)

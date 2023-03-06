@@ -15,9 +15,9 @@ import plotly.graph_objects as go
 
 
 # ## Build blocks for markdown placeholders
-# 
+#
 # We've duplicated the code cells from our source notebook (`assets/article.ipynb`).
-# 
+#
 # Let's go through and turn what would have been _output cells_ into Datapane objects. We'll create them inline after each placeholder, e.g. `{{ placeholder_name }}`, and give the variables corresponding names to keep things simple.
 
 # In[2]:
@@ -172,7 +172,8 @@ for front in fronts:
         y=front_solutions_df.f2,
         name=f"front {front}",
         mode="markers",
-        marker=dict(color=px.colors.qualitative.Plotly[front], size=10 ),    )
+        marker=dict(color=px.colors.qualitative.Plotly[front], size=10),
+    )
 
 
 # {{plot_solutions_ranked}}
@@ -219,9 +220,7 @@ for front in fronts:
         ),
     )
 
-fig.update_layout(
-    template="seaborn", height=100, margin=dict(l=0, r=0, t=0, b=0), showlegend=False
-)
+fig.update_layout(template="seaborn", height=100, margin=dict(l=0, r=0, t=0, b=0), showlegend=False)
 fig.update_xaxes(visible=False)
 fig.update_yaxes(visible=False)
 
@@ -236,7 +235,9 @@ banner_block = dp.Plot(fig)
 v = dp.Blocks(
     banner_block,
     dp.Text("# Non-Dominated Sorting"),
-    dp.Text("Article by [Dr. Shahin Rostami](https://shahinrostami.com), from the book [Practical Evolutionary Algorithms](https://datacrayon.com/shop/product/practical-evolutionary-algorithms-book/)."),
+    dp.Text(
+        "Article by [Dr. Shahin Rostami](https://shahinrostami.com), from the book [Practical Evolutionary Algorithms](https://datacrayon.com/shop/product/practical-evolutionary-algorithms-book/)."
+    ),
     dp.Text(file="assets/article.md").format(
         # placeholders in our articles.md will be replaced with Datapane objects.
         text_variables_and_objectives=text_variables_and_objectives,
@@ -252,4 +253,3 @@ v = dp.Blocks(
 )
 
 dp.save_report(v, path="template.html", open=True)
-

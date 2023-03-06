@@ -1,1 +1,0 @@
-https://datapane-cdn.com/python-client/dev/datapane--py3-none-any.whl

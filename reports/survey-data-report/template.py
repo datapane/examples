@@ -2,19 +2,19 @@
 # coding: utf-8
 
 # # Survey data report
-# 
+#
 # Looking through the [2021 Kaggle Machine Learning & Data Science Survey](https://www.kaggle.com/c/kaggle-survey-2021https://www.kaggle.com/c/kaggle-survey-2021), let's build a report that's focussed on individuals that use Python.
 
 # For those who use Python (`Q7_Part_1`) in segmenting by:
-# 
+#
 # - Current role (`Q5`)
 # - Industry (`Q20`)
 # - Size of data science team at work (`Q22`)
 # - Primary tool (`41`)
-# 
+#
 # For the following questions:
-# 
-# - What Python IDEs (`Q9`), 
+#
+# - What Python IDEs (`Q9`),
 # - What hosted Python notebook products (`Q10`)
 # - What visualization libraries (`Q14`)
 # - What BI tools do they use (`Q34-A`)
@@ -40,7 +40,6 @@ pd.options.mode.chained_assignment = None
 
 
 def build_segment_distribution(segments, segment_name):
-
     counts = pd.DataFrame(segments.value_counts()).rename_axis().reset_index()
     counts.columns = [segment_name, "counts"]
     counts
@@ -51,9 +50,7 @@ def build_segment_distribution(segments, segment_name):
         .encode(
             x=alt.X(counts.columns[0], sort="-y", axis=alt.Axis(labelAngle=-45)),
             y="counts",
-            color=alt.Color(
-                segment_name, scale=alt.Scale(scheme="rainbow"), legend=None
-            ),
+            color=alt.Color(segment_name, scale=alt.Scale(scheme="rainbow"), legend=None),
         )
     )
 
@@ -64,7 +61,6 @@ def build_segment_distribution(segments, segment_name):
 
 
 def build_question_by_segment(data, segments, segment_name):
-
     segment_data = data.copy()
     segment_data[segment_name] = segments
 
@@ -78,16 +74,12 @@ def build_question_by_segment(data, segments, segment_name):
         alt.Chart(df)
         .mark_bar()
         .encode(
-            x=alt.X(
-                "value:O", sort=df_order, axis=alt.Axis(labelAngle=-45), title=None
-            ),
+            x=alt.X("value:O", sort=df_order, axis=alt.Axis(labelAngle=-45), title=None),
             y=alt.Y(
                 f"count({segment_name})",
                 axis=alt.Axis(title="Count"),
             ),
-            color=alt.Color(
-                segment_name, scale=alt.Scale(scheme="rainbow"), legend=None
-            ),
+            color=alt.Color(segment_name, scale=alt.Scale(scheme="rainbow"), legend=None),
             tooltip=["value:O", f"{segment_name}", f"count({segment_name})"],
         )
     )
@@ -95,20 +87,19 @@ def build_question_by_segment(data, segments, segment_name):
     blocks.append(dp.Plot(fig_all, label=f"All {segment_name}"))
 
     for segment in df[segment_name].unique():
-
         fig = (
             alt.Chart(df[df[segment_name] == segment])
             .mark_bar()
             .encode(
-                x=alt.X(
-                    "value:O", sort=df_order, axis=alt.Axis(labelAngle=-45), title=None
-                ),
+                x=alt.X("value:O", sort=df_order, axis=alt.Axis(labelAngle=-45), title=None),
                 y=alt.Y(
                     f"count({segment_name})",
                     axis=alt.Axis(title="Count"),
                 ),
                 color=alt.Color(
-                    segment_name, scale=alt.Scale(scheme="rainbow", domain=sorted(df[segment_name].unique())), legend=None
+                    segment_name,
+                    scale=alt.Scale(scheme="rainbow", domain=sorted(df[segment_name].unique())),
+                    legend=None,
                 ),
             )
         )
@@ -130,9 +121,7 @@ def build_questions_by_segment(questions, segment, segment_name):
 
     for question, question_data in questions.items():
         questions_by_segment.append(f"## {question}")
-        questions_by_segment.append(
-            build_question_by_segment(question_data, segment, segment_name)
-        )
+        questions_by_segment.append(build_question_by_segment(question_data, segment, segment_name))
 
     return questions_by_segment
 
@@ -236,9 +225,7 @@ data["Q9_Part_4"].loc[~data["Q9_Part_4"].isnull()] = "VSCode"
 # In[12]:
 
 
-data = data.drop(
-    labels=["Q9_Part_2", "Q9_Part_3", "Q9_Part_10", "Q9_Part_11", "Q9_Part_12"], axis=1
-)
+data = data.drop(labels=["Q9_Part_2", "Q9_Part_3", "Q9_Part_10", "Q9_Part_11", "Q9_Part_12"], axis=1)
 data = data.drop(labels=["Q10_Part_15", "Q10_Part_16"], axis=1)
 
 
@@ -322,4 +309,3 @@ v = dp.Blocks(
 )
 
 dp.save_report(v, "template.html", open=True)
-

@@ -47,11 +47,9 @@ def youtube_analytics_to_df(yt_analytics_rows, yt_analytics_columns, year=None):
 
 def get_last_28_days(df_yt_analytics, last_28_days_end=None):
     last_28_days_start = last_28_days_end - timedelta(days=28)
-    last_28_days_mask = (df_yt_analytics["Date"] > last_28_days_start) & (
-        df_yt_analytics["Date"] <= last_28_days_end
-    )
+    last_28_days_mask = (df_yt_analytics["Date"] > last_28_days_start) & (df_yt_analytics["Date"] <= last_28_days_end)
     df_yt_last_28_days = df_yt_analytics[last_28_days_mask]
-    
+
     return df_yt_last_28_days
 
 
@@ -62,9 +60,7 @@ def get_last_28_days(df_yt_analytics, last_28_days_end=None):
 # In[4]:
 
 
-def plot_calendar_heatmap(
-    metric, df_yt_analytics, labels=True, legend=True, height=120
-):
+def plot_calendar_heatmap(metric, df_yt_analytics, labels=True, legend=True, height=120):
     chart = (
         alt.Chart(df_yt_analytics)
         .mark_rect(stroke="white", strokeWidth=2)
@@ -123,13 +119,9 @@ def plot_calendar_heatmap(
 
 def plot_banner(df_yt_analytics):
     df_banner = df_yt_analytics.copy()
-    df_banner["Views"] = df_banner["Views"] + np.random.randint(
-        1, 10, df_banner.shape[0]
-    )
-    
-    return plot_calendar_heatmap(
-        "Views", df_banner, labels=False, legend=False, height=100
-    )
+    df_banner["Views"] = df_banner["Views"] + np.random.randint(1, 10, df_banner.shape[0])
+
+    return plot_calendar_heatmap("Views", df_banner, labels=False, legend=False, height=100)
 
 
 # In[6]:
@@ -142,20 +134,16 @@ def plot_metric_time_series(metric, df_yt_analytics):
         .properties(width="container", height=200)
     )
 
-    selection = alt.selection_single(
-        fields=["Date"], nearest=True, on="mouseover", empty="none", clear="mouseout"
-    )
+    selection = alt.selection_single(fields=["Date"], nearest=True, on="mouseover", empty="none", clear="mouseout")
 
-    area = base.mark_area(
-        line=True, interpolate="monotone", fill="RGBA(140,107,254,1)", opacity=0.15
-    ).encode(
+    area = base.mark_area(line=True, interpolate="monotone", fill="RGBA(140,107,254,1)", opacity=0.15).encode(
         y=alt.Y(f"{metric}:Q", axis=alt.Axis(orient="right", title=None)),
         color=alt.value("RGBA(140,107,254,1)"),
     )
 
-    points = area.mark_point(
-        fill="RGBA(140,107,254,1)", stroke="white", size=100, opacity=1
-    ).transform_filter(selection)
+    points = area.mark_point(fill="RGBA(140,107,254,1)", stroke="white", size=100, opacity=1).transform_filter(
+        selection
+    )
 
     rule = (
         base.mark_rule(stroke="RGBA(154,232,255,1)", strokeWidth=4)
@@ -178,9 +166,7 @@ def plot_metric_time_series(metric, df_yt_analytics):
 
 
 def plot_metric_popular_day(metric, df_yt_analytics):
-    max_value = (
-        df_yt_analytics.groupby(df_yt_analytics["Date"].dt.weekday).sum()[metric].max()
-    )
+    max_value = df_yt_analytics.groupby(df_yt_analytics["Date"].dt.weekday).sum()[metric].max()
 
     bars = (
         alt.Chart(df_yt_analytics)
@@ -204,7 +190,7 @@ def plot_metric_popular_day(metric, df_yt_analytics):
     ).encode(
         text=f"sum({metric}):Q",
     )
-    
+
     chart = (bars + text).configure_scale(bandPaddingInner=0.2)
 
     return chart
@@ -221,9 +207,7 @@ with open("./assets/youtube_analytics_data.json", "r") as f:
 yt_analytics_rows = yt_analytics_data["rows"]
 yt_analytics_columns = yt_analytics_data["columns"]
 
-df_yt_analytics, year, last_sample_date = youtube_analytics_to_df(
-    yt_analytics_rows, yt_analytics_columns
-)
+df_yt_analytics, year, last_sample_date = youtube_analytics_to_df(yt_analytics_rows, yt_analytics_columns)
 
 df_yt_last_28_days = get_last_28_days(df_yt_analytics, last_sample_date)
 
@@ -282,7 +266,7 @@ period_block = dp.BigNumber(
     heading=f"{last_sample_date.strftime('%d %b')} - {last_sample_date.strftime('%d %b')} {last_sample_date.strftime('%Y')}",
     value="Last 28 days",
 )
- 
+
 introduction_block = dp.Text(
     """This report highlights user engagement with our social media channels in 2022. 
             
@@ -304,7 +288,6 @@ v = dp.Blocks(
         period_block,
         columns=2,
     ),
-    
     # analytics page per social media channel (e.g. YouTube, Twitter, etc.)
     dp.Select(
         blocks=social_media_pages,
@@ -313,4 +296,3 @@ v = dp.Blocks(
 )
 
 dp.save_report(v, path="template.html", open=True)
-
