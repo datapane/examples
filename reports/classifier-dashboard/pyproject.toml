@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "dp-template-classifier-dashboard"
+version = "0.1.0"
+description = "Datapane Template: Performance Dashboard for Classifiers"
+authors = ["Dr. Shahin Rostami <hello@shahinrostami.com>"]
+
+[tool.poetry.dependencies]
+python = ">=3.8,<3.11.0"
+scikit-learn = "^1.1.1"
+jupyterlab = "^3.4.3"
+matplotlib = "^3.5.2"
+datapane = "^0.16.1"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

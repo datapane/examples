@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "dp-template-social-media-dashboard"
+version = "0.1.0"
+description = "Datapane Template: Social media dashboard"
+authors = ["Datapane <dev@datapane.com>"]
+
+[tool.poetry.dependencies]
+python = ">=3.8,<3.11.0"
+jupyterlab = "^3.4.3"
+google-api-python-client = "^2.56.0"
+google-auth = "^2.10.0"
+google-auth-oauthlib = "^0.5.2"
+google-auth-httplib2 = "^0.1.0"
+altair = "^4.2.0"
+datapane = "^0.16.1"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
