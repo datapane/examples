@@ -1,0 +1,38 @@
+script: financial_model.py 
+name: Finance Model 
+repo: https://github.com/datapane/gallery/tree/master/startup-calculator
+parameters: 
+  - name: current_cash
+    description: The amount of cash you have in the bank
+    type: integer
+    required: True
+    default: 100000
+    min: 0
+  - name: forecast_length_years
+    description: The number of years to forecast
+    type: integer
+    required: True
+    min: 1
+    max: 10
+    default: 2
+  - name: weekly_growth
+    type: integer
+    required: True
+    description: Your current weekly growth rate (in %)
+  - name: initial_revenue
+    type: integer
+    required: True
+    description: Your current revenue
+    min: 0
+  - name: monthly_burn
+    type: integer
+    min: 0
+    required: True
+    description: Your current monthly burn
+  - name: cash_injection
+    description: Misc cash injection amount (i.e. R&D, fundraising)
+    default: 0
+    type: integer
+  - name: cash_injection_offset 
+    type: integer
+    default: 1
