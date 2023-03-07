@@ -57,12 +57,14 @@ def calculate_runway(
     base = (
         alt.Chart(df[["date", "cash_0g"]])
         .transform_window(
-            # Use count() to find out the current month we're on (i.e. the index), as we use that as the power for our growth rate
+            # Use count() to find out the current month we're on (i.e. the index),
+            # as we use that as the power for our growth rate
             index="count()"
         )
         .transform_calculate(
             # Transform a % growth rate (i.e. 7) into sometime useful (i.e. 1.07).
-            # Raise that to our current month (i.e. for month 2, 1.07 ** 2 = ~1.145), and multiply that by our revenue amount (~1.145 * 500)
+            # Raise that to our current month (i.e. for month 2, 1.07 ** 2 = ~1.145), and
+            # multiply that by our revenue amount (~1.145 * 500)
             forecast_revenue=((1 + (selector.month_growth / 100)) ** alt.datum.index)
             * start_revenue
         )
@@ -72,7 +74,8 @@ def calculate_runway(
             frame=[None, 0],
         )
         .transform_calculate(
-            # Add cumprod to current cash to find cash standing (i.e. if we have £100k cash, and 10 months of £10k revenue, we have £200k now)
+            # Add cumprod to current cash to find cash standing (i.e. if we have £100k cash,
+            # and 10 months of £10k revenue, we have £200k now)
             adj_cash=alt.datum.cash_0g
             + alt.datum.forecast_total_revenue
         )
@@ -116,7 +119,8 @@ def calculate_runway(
                 ),
                 dp.Group(
                     blocks=[
-                        "> In this dataset, `cash_0g`/`revenue_0g` presumes no further growth, whereas `cash_dg`/`revenue_dg` presumes growth at the current rate continues.",
+                        "> In this dataset, `cash_0g`/`revenue_0g` presumes no further growth, whereas "
+                        + "`cash_dg`/`revenue_dg` presumes growth at the current rate continues.",
                         dp.DataTable(df),
                     ],
                     label="Interactive Dataset",
@@ -126,6 +130,7 @@ def calculate_runway(
     )
 
 
+# main view and controls
 controls = dict(
     current_cash=dp.NumberBox(initial=10000),
     forecast_length_years=dp.Range(min=1, max=10, initial=1),
