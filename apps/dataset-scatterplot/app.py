@@ -1,44 +1,45 @@
+import typing as t
+
 import datapane as dp
 import pandas as pd
 import altair as alt
 
-dataset = None
-columns = None
+from components import datasets
 
 
-def plot_dataset(params):
-    global dataset
+def plot_dataset(params: t.Dict, session: t.Dict) -> dp.Plot:
+    df: pd.DataFrame = session["df"]
 
     fig = (
-        alt.Chart(dataset)
+        alt.Chart(df)
         .mark_point()
         .encode(
             x=alt.X(params["x_axis"], scale=alt.Scale(zero=False)),
             y=alt.X(params["y_axis"], scale=alt.Scale(zero=False)),
             color=params["color"],
-            tooltip=columns,
+            tooltip=list(df.columns),
         )
     )
 
-    return dp.Plot(fig, name="plot")
+    return dp.Plot(fig)
 
 
-def upload_dataset(params):
-    global dataset, columns
-    dataset = pd.read_csv(params["dataset"])
-    columns = list(dataset.columns)
+def upload_dataset(params: t.Dict, session: t.Dict) -> dp.View:
+    df = datasets.load_dataset(params)
+    columns = list(df.columns)
+    session["df"] = df
 
     plot_controls = dp.Controls(
-        dp.Choice("x_axis", options=columns, initial=columns[0]),
-        dp.Choice("y_axis", options=columns, initial=columns[0]),
-        dp.Choice("color", options=columns, initial=columns[0]),
+        x_axis=dp.Choice(options=columns, initial=columns[0]),
+        y_axis=dp.Choice(options=columns, initial=columns[0]),
+        color=dp.Choice(options=columns, initial=columns[0]),
     )
 
-    return dp.Group(
-        dp.DataTable(dataset),
+    return dp.View(
+        dp.DataTable(df),
         dp.Group(
-            dp.Function(
-                plot_dataset,
+            dp.Form(
+                on_submit=plot_dataset,
                 target="plot",
                 submit_label="Plot",
                 controls=plot_controls,
@@ -49,31 +50,15 @@ def upload_dataset(params):
     )
 
 
-controls = dp.Controls(
-    dp.File("dataset", label="Upload test data"),
+upload_and_display = dp.View(
+    dp.Form(
+        on_submit=upload_dataset,
+        target="dataset",
+        submit_label="Upload",
+        controls=datasets.data_choice_with_file,
+    ),
+    dp.Divider(),
+    dp.Text("Please upload a dataset.", name="dataset"),
 )
 
-upload_and_display = dp.View(
-    dp.Select(
-        blocks=[
-            dp.Group(
-                dp.Text(
-                    "Please upload a dataset.",
-                ),
-                label="Explore",
-                name="dataset",
-            ),
-            dp.Group(
-                dp.Function(
-                    upload_dataset,
-                    target="dataset",
-                    submit_label="Upload",
-                    swap=dp.Swap.INNER,
-                    controls=controls,
-                ),
-                label="Upload dataset",
-            ),
-        ]
-    )
-)
-dp.serve(upload_and_display)
+dp.serve_app(upload_and_display)

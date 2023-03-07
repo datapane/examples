@@ -1,10 +1,11 @@
 import datapane as dp
 from rembg import remove
 from PIL import Image
+from pathlib import Path
 
 
-def fix_image(params):
-    image = Image.open(params["upload"])
+def process_image(upload: Path) -> dp.Group:
+    image = Image.open(upload)
     fixed = remove(image)
     image.save("original.png", "PNG")
     fixed.save("fixed.png", "PNG")
@@ -20,14 +21,18 @@ def fix_image(params):
     )
 
 
+heading = """
+## Remove the background from your image
+🐶 Try uploading an image to watch the background magically removed. 
+Special thanks to the <a href="https://github.com/danielgatis/rembg">rembg</a> library 😁
+"""
 v = dp.View(
     dp.Group(
-        """## Remove the background from your image
-🐶 Try uploading an image to watch the background magically removed. Full quality images can be downloaded from the sidebar. This code is open source and available here on GitHub. Special thanks to the <a href="https://github.com/danielgatis/rembg">rembg</a> library 😁""",
-        dp.Function(fix_image, target="results", controls=dp.Controls(dp.File("upload"))),
+        heading,
+        dp.Form(on_submit=process_image, target="results", controls=dp.Controls(upload=dp.File())),
         columns=2,
     ),
-    dp.Group(fix_image({"upload": open("zebra.jpg", "rb")}), name="results"),
+    dp.Group(process_image(upload=Path("zebra.jpg")), name="results"),
 )
 
-dp.serve(v)
+dp.serve_app(v)

@@ -24,17 +24,19 @@
 
 ---
 
-## Welcome to Datapane's App Examples Repository
+## Welcome to Datapane's Examples Repository
 
 Hi there! 👋
 
-This repository contains a collection of examples that demonstrate how to use Datapane to create and share data apps.
+This repository contains a collection of examples that demonstrate how to use Datapane to create and share data reports and apps.
 
-1. Run `pip install -r requirements.py` from an app example folder to install dependencies.
-2. Depending on the format of the example, either run:
-   - the notebook `app.ipynb` through Jupyter Lab, 
-   - the script `app.py` (e.g. with `python app.py`).
-4. Visit the URL printed to the terminal/cell output, usually http://127.0.0.1:8080.
+1. Run `pip install -r requirements.py` from an example folder to install dependencies.
+1. Depending on the format of the example, either run:
+    - the notebook, e.g. `app.ipynb`, through Jupyter Lab, 
+    - the script, e.g. `python app.py`)
+1. View the output, either,
+    - For Apps, visit the URL printed to the terminal/cell output, usually http://127.0.0.1:8080.
+    - For Reports, open the saved report locally or the uploaded report on Datapane Clodd
 
 ## Resources
 
@@ -57,3 +59,4 @@ We're here to help you get up and running with Datapane. Check out the [Datapane
 - **Static generation:** Sharing an app shouldn't require deploying an app. Render a standalone HTML bundle which you can share or host on the web.
 - **API-first and programmatic:** Programmatically generate apps from inside of Spark, Airflow, or Jupyter. Schedule updates to build real-time dashboards.
 - **Dynamic front-end components**: Say goodbye to writing HTML. Build apps from a set of interactive components, like DataTables, tabs, and selects.
+

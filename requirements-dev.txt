@@ -1,0 +1,3 @@
+-e ../datapane/python-client
+-e ../components/
+jupyterlab>=^3.6.1
