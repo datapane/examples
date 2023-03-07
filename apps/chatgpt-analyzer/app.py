@@ -23,22 +23,37 @@ def ask_viz_question(df, user_question):
     
     {df.dtypes}, 
     
-    Write me a vega_lite v5 specification for a plot with the following instructions: {user_question}. Do not
-    do any transformations on the data (such as averages or aggregations) yourself. The data must not change. All transformations must happen in vega_lite, but only include the first 10 rows of the dataset. No not return any commentary, and only return JSON."""
+    and where the sample of the first 10 rows is:
+    
+    {df.head(10)}
+    
+    Write me a valid vega_lite v4 specification based on the instructions for a visualization: {user_question}. 
+    Do not do any transformations on the data (such as averages or aggregations) yourself. 
+    This vega_lite spec must not have a url field, instead data will be specified in the values field.
+    Only include a single row of data in the values field.
+    JSON must not contain the characters //
+    Automatically choose the best type of plot mark based on your understanding of the schema (for instance, scatter, line, points, area).
+    All transformations must happen in vega_lite.
+    Your response must not have any comments in, or contain the characters //. It must be valid JSON.
+    Do not return any commentary, and only return JSON which is a valid vega_lite spec."""
         
     vega_spec = ask_chatgpt(question)
-
-    result_dict = json.loads(vega_spec)
-
-    # Load our dataset into the spec
-    result_dict['data']['values'] = json.loads(df.to_json(orient="records"))
         
-    plot = alt.Chart.from_json(json.dumps(result_dict))
+    try:
+        result_dict = json.loads(vega_spec)
+
+        # Load our dataset into the spec
+        result_dict['data']['values'] = json.loads(df.to_json(orient="records"))
+
+        plot = alt.Chart.from_json(json.dumps(result_dict))
+    except Exception as inst:
+        return dp.Text(f'```{str(inst)}``` Vega-spec:```{vega_spec}```')
 
     return [
         plot,
         dp.Toggle(dp.Code(vega_spec), label='Show vega-lite spec'),
     ]
+
 
 def ask_data_question(df, user_question):
 
