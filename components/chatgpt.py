@@ -12,7 +12,6 @@ openai.api_key = getenv("OPENAI_API_KEY", "")
 
 
 def _ask_chatgpt(question: str) -> str:
-
     completion = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=[{"role": "user", "content": question}])
 
     return completion["choices"][0]["message"]["content"]
@@ -75,4 +74,6 @@ def ask_data_question(df: pd.DataFrame, user_question: str) -> dp.Select:
     generated_query = _ask_chatgpt(question)
     sample = con.execute(generated_query).df()
 
-    return dp.Select(dp.DataTable(sample, label="Dataset"), dp.Code(generated_query, language="sql", label="Show SQL Query"))
+    return dp.Select(
+        dp.DataTable(sample, label="Dataset"), dp.Code(generated_query, language="sql", label="Show SQL Query")
+    )
