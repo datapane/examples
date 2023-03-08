@@ -10,13 +10,16 @@ from components import chatgpt
 def ask_question(user_question: str, question_type: str, session: t.Dict) -> t.List:
     df = session["df"]
 
-    question_f = chatgpt.ask_data_question if question_type == "Dataset" else chatgpt.ask_viz_question
+    if question_type == "Dataset":
+        res = chatgpt.ask_data_question(df, user_question)
+    else:  # Visualization
+        res = chatgpt.ask_viz_question(df, user_question)
 
     return [
         dp.Divider(),
         f"<h4>🙋‍♂️ {user_question}</h4>",
         f"<h4 style='text-align:right'>🤖 Here's your {question_type}</h4>",
-        question_f(df, user_question),
+        res,
     ]
 
 

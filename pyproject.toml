@@ -24,6 +24,10 @@ plotly = "^5.13.0"
 Platypus-Opt = "^1.0.4"
 duckdb = "^0.7.1"
 openai = "^0.27.0"
+# move these
+seaborn = "^0.12.2"
+
+
 
 [tool.poetry.group.dev.dependencies]
 jupyterlab = "^3.6.1"
@@ -31,7 +35,7 @@ sqlalchemy = "^2.0.1"
 # needed for social-media report
 google-api-python-client = "^2.56.0"
 google-auth = "^2.10.0"
-google-auth-oauthlib = "^0.5.2"
+google-auth-oauthlib = "^1.0.0"
 google-auth-httplib2 = "^0.1.0"
 
 
