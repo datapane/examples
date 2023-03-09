@@ -1,0 +1,11 @@
+datapane>=0.16.1
+scikit-learn
+matplotlib>=3.2.0
+scikit-image
+pooch
+yfinance
+plotly>=5.0.0
+duckdb
+openai
+seaborn>=0.12.0
+pytrends>=4.0.0
