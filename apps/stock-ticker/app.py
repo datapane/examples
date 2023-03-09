@@ -28,5 +28,5 @@ def process(ticker: str) -> dp.View:
 
 
 # build the form and run the app
-controls = dp.Controls(ticker=dp.TextBox(label="Stock Ticker (e.g. AMZN, WMT, AAPL, ^DJI)", initial="^DJI"))
+controls = dp.Controls(ticker=dp.TextBox(label="Stock Ticker (e.g. AMZN, WMT, AAPL, ^DJI)", initial="AMZN"))
 dp.serve_app(dp.View(dp.Form(on_submit=process, controls=controls)))

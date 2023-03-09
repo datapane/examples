@@ -24,7 +24,8 @@ for i in range(N):
     solution.evaluate()
     solutions.append(solution)
 
-text_variables_and_objectives = dp.Text(f"""
+text_variables_and_objectives = dp.Text(
+    f"""
 Design variables:\n {solutions[0].variables}
 Objective values:\n {solutions[0].objectives}
 """
@@ -123,7 +124,7 @@ v = dp.Blocks(
     dp.Text(
         "Article by [Dr. Shahin Rostami](https://shahinrostami.com), from the book [Practical Evolutionary Algorithms](https://datacrayon.com/shop/product/practical-evolutionary-algorithms-book/)."
     ),
-    text_group
+    text_group,
 )
 
 dp.save_report(v, path="report.html", open=True)

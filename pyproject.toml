@@ -26,6 +26,7 @@ duckdb = "^0.7.1"
 openai = "^0.27.0"
 # move these
 seaborn = "^0.12.2"
+pytrends = "^4.9.0"
 
 
 

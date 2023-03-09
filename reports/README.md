@@ -1,6 +1,9 @@
 # Datapane Demos
 In this repository, you'll find various examples and demos which demonstrate how to use [Datapane](https://datapane.com). 
 
+## Hello World
+Learn how to use Datapane to create and publish an interactive map to plot COVID data in your country.
+
 ## Startup Calculator
 This notebook calculates start-up runway and burn based on a weekly growth rate using pandas. It also includes a visualisation to plot Default Alive / Default Dead.
 
@@ -9,6 +12,9 @@ Use Datapane, pandas, and Yahoo Finance to plot live stock market prices in an i
 
 ## Google Trends Analysis
 Use Datapane and Google Trends to build a report on the popularity of your favourite band or sports team.
+
+
+# Public Hosted Reports
 
 ## Visualize Gapmind and Basketball Dataset with Plotly
 Proportion is important when it comes to visualization. [This report](https://datapane.com/jphwang/reports/gapminder_9a233f33/) is an excellent example of plots with right proportion. Run the source code for this script [here](https://notebooks.gesis.org/binder/v2/gh/khuyentran1401/gapminder/8b2fce261ea19a59765942a0ae875d8e756fef50)
@@ -27,6 +33,3 @@ Proportion is important when it comes to visualization. [This report](https://da
 
 ## Mapping Music With Every Noise and Plotly
 [This report](https://datapane.com/carlos_valcarcel/reports/mapping_music_76f09125/) uses Folium to create a geographic representation of music markets. Run the source code for this script [here](https://mybinder.org/v2/gh/khuyentran1401/Music-Marketing/b4b3c0eb37a2f1e9bc129d7aa2c1a4892f657f3f?filepath=music_marketing%2Ftargeting.ipynb)
-
-## Hello World
-Learn how to use Datapane to create and publish an interactive map to plot COVID data in your country.

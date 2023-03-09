@@ -41,12 +41,15 @@ def get_sample(params: t.Dict) -> t.List:
 
 
 v = dp.View(
-    dp.Text("# Airport searcher"),
-    dp.DataTable(df),
-    dp.Form(
-        cache=True,
-        on_submit=get_sample,
-        controls=dp.Controls(state=dp.Choice(options=list(df["state"].dropna().unique()))),
+    dp.Page(
+        dp.Text("# Airport searcher"),
+        dp.Form(
+            cache=True,
+            on_submit=get_sample,
+            controls=dp.Controls(state=dp.Choice(options=list(df["state"].dropna().unique()))),
+        ),
+        title="Filtered Dataset",
     ),
+    dp.Page(dp.DataTable(df), title="Full Dataset"),
 )
 dp.serve_app(v)

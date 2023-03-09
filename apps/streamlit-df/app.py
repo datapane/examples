@@ -26,10 +26,9 @@ def process(countries: str) -> dp.Group:
     return dp.Group("### Gross Agricultural Production ($B)", dp.Table(table_data), chart)
 
 
-v = dp.View(
+dp.serve_app(
     dp.Form(
         on_submit=process,
         controls=dict(countries=dp.MultiChoice(initial=["China", "United States of America"], options=list(df.index))),
     )
 )
-dp.serve_app(v)

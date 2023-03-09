@@ -8,11 +8,11 @@ def calculate_runway(
     initial_revenue: float,
     monthly_burn: float,
     weekly_growth_percent: float,
-    forecast_years: int,
+    forecast_length_years: int,
     cash_injection: float,
     cash_injection_offset: int,
 ) -> dp.Blocks:
-    forecast_length_days = 365 * forecast_years
+    forecast_length_days = 365 * forecast_length_years
     monthly_growth_rate = pow((1 + weekly_growth_percent / 100), 4) - 1
     today = pd.to_datetime("today")
     end_forecast = today + pd.Timedelta(forecast_length_days, unit="d")
