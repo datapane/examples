@@ -30,5 +30,6 @@ dp.serve_app(
     dp.Form(
         on_submit=process,
         controls=dict(countries=dp.MultiChoice(initial=["China", "United States of America"], options=list(df.index))),
+        cache=True,
     )
 )

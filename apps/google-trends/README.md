@@ -1,4 +1,4 @@
-# Introduction
+# Google Trends
 
 Google trends has a wealth of information on specific keywords. Even if we take a simple query like 'food', we can answer questions such as: 
 
@@ -12,3 +12,12 @@ If you are comfortable writing Python, you have everything in your toolkit to an
 
 Instead of having to manually work with Google's APIs, this notebook works with the fantastic `pytrends` library to answer the questions above in a couple of lines of code. It allows a simple interface for automating the downloading of data from Google Trends.
 
+
+This sample Datapane App demonstrates,
+- working with third-party APIs
+- Basic Datapane Forms and Functions
+
+
+## Requirements
+
+- `pytrends`

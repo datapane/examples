@@ -1,6 +1,12 @@
-# Finance Forecasting Model for Startups
+# Startup Calculator
 
-This script forecasts your future finances based on current cash position, growth rate, revenue, and costs.
+
+This sample Datapane App demonstrates,
+- working with the Altair plotting library
+- Basic Datapane Forms and Functions
+
+
+This app forecasts your future finances based on current cash position, growth rate, revenue, and costs.
 
 Using pandas, it tries to answer two questions:
 
@@ -10,3 +16,4 @@ Using pandas, it tries to answer two questions:
 "Running out of money" is actually defined as having less than 25,000 in the bank, as this is presumed to be the minimum amount to wind down the company in a suitable fashion. 
 
 It also uses Altair to plot [Default alive / Default dead](http://paulgraham.com/aord.html): the growth rate you will need to achieve to never die. This plot is inspired by a [similar one](http://growth.tlb.org/#) by Trevor Blackwell.
+

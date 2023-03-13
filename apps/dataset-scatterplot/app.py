@@ -4,6 +4,7 @@ import datapane as dp
 import pandas as pd
 import altair as alt
 
+import datapane_components as dc
 from datapane_components import datasets
 
 
@@ -57,7 +58,7 @@ upload_and_display = dp.View(
         submit_label="Upload",
         controls=datasets.data_choice_with_file,
     ),
-    dp.Divider(),
+    dc.divider(),
     dp.Text("Please upload a dataset.", name="dataset"),
 )
 

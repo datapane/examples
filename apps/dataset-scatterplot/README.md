@@ -1,5 +1,6 @@
 # Dataset Scatterplot
 
-Sample app that demonstrates uploading then plotting a dataset - this is an example of a chained function
-
-
+This sample Datapane app demonstrates,
+- Uploading and opening user-generated dataset
+- Using the `session` support to store dataset per-user
+- Using chained functions to return custom views based on the current user state / loaded data

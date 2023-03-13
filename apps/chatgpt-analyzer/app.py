@@ -2,7 +2,8 @@ import typing as t
 
 import datapane as dp
 
-from datapane_components import chatgpt, datasets
+import datapane_components as dc
+from datapane_components import datasets, chatgpt
 
 
 def ask_question(user_question: str, question_type: str, session: t.Dict) -> t.List:
@@ -14,7 +15,7 @@ def ask_question(user_question: str, question_type: str, session: t.Dict) -> t.L
         res = chatgpt.ask_viz_question(df, user_question)
 
     return [
-        dp.Divider(),
+        dc.divider(),
         f"<h4>🙋‍♂️ {user_question}</h4>",
         f"<h4 style='text-align:right'>🤖 Here's your {question_type}</h4>",
         res,

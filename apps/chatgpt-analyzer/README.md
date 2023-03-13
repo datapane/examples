@@ -1,4 +1,6 @@
 # ChatGPT Analyzer
 
-Sample app that integrates with ChatGPT to perform plotting and filtering without requiring writing custom code
+This sample Datapane app demonstrates,
 
+- loading a user-provided dataset
+- integration with ChatGPT to perform plotting and filtering without requiring writing custom code

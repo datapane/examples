@@ -144,7 +144,7 @@ def process(ticker1: str, ticker2: str = "GOOG") -> dp.View:
         dp.Group(fig0, fig1, fig2, fig3, fig4, fig5, columns=2),
         dp.Plot(fig7),
         # datasets
-        *dc.Section(
+        *dc.section(
             """
         # Datasets
         _These datasets are pulled live_.
