@@ -4,7 +4,7 @@ import datapane as dp
 import pandas as pd
 import altair as alt
 
-from components import datasets
+from datapane_components import datasets
 
 
 def plot_dataset(params: t.Dict, session: t.Dict) -> dp.Plot:

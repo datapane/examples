@@ -2,7 +2,7 @@ import typing as t
 
 import datapane as dp
 
-from components import chatgpt, datasets
+from datapane_components import chatgpt, datasets
 
 
 def ask_question(user_question: str, question_type: str, session: t.Dict) -> t.List:
