@@ -127,31 +127,33 @@ def process(ticker1: str, ticker2: str = "GOOG") -> dp.View:
     ticker2_today = df2.iloc[-1]
 
     return dp.View(
-        f"""## {ticker1} analysis (against {ticker2})""",
         dp.Group(
-            dp.BigNumber(
-                heading=f"{ticker1} Day Performance",
-                value="${:,.2f}".format(ticker1_today.Close),
-                prev_value="${:,.2f}".format(ticker1_today.Open),
+            f"""## {ticker1} analysis (against {ticker2})""",
+            dp.Group(
+                dp.BigNumber(
+                    heading=f"{ticker1} Day Performance",
+                    value="${:,.2f}".format(ticker1_today.Close),
+                    prev_value="${:,.2f}".format(ticker1_today.Open),
+                ),
+                dp.BigNumber(
+                    heading=f"{ticker2} Day Performance",
+                    value="${:,.2f}".format(ticker2_today.Close),
+                    prev_value="${:,.2f}".format(ticker2_today.Open),
+                ),
+                columns=2,
             ),
-            dp.BigNumber(
-                heading=f"{ticker2} Day Performance",
-                value="${:,.2f}".format(ticker2_today.Close),
-                prev_value="${:,.2f}".format(ticker2_today.Open),
-            ),
-            columns=2,
-        ),
-        dp.Group(fig0, fig1, fig2, fig3, fig4, fig5, columns=2),
-        dp.Plot(fig7),
-        # datasets
-        *dc.section(
+            dp.Group(fig0, fig1, fig2, fig3, fig4, fig5, columns=2),
+            dp.Plot(fig7),
+            # datasets
+            *dc.section(
+                """
+            # Datasets
+            _These datasets are pulled live_.
             """
-        # Datasets
-        _These datasets are pulled live_.
-        """
+            ),
+            dp.Select(dp.DataTable(orig_df1, label=ticker1), dp.DataTable(df2, label=ticker2)),
+            label=f"{ticker1} vs {ticker2}",
         ),
-        dp.Select(dp.DataTable(orig_df1, label=ticker1), dp.DataTable(df2, label=ticker2)),
-        label="ssad",
     )
 
 
@@ -160,6 +162,10 @@ controls = dp.Controls(
     ticker2=dp.TextBox(label="(Optional) Comparison Ticker", initial="GOOG", allow_empty=True),
 )
 
-# TODO - convert to use dp.Swap.APPEND on a dp.Select
-v = dp.View(dp.Form(on_submit=process, controls=controls, label="Choose Ticker", cache=True))
+v = dp.View(
+    dp.Compute(
+        function=process, controls=controls, label="Choose Ticker", cache=True, target="results", swap=dp.Swap.APPEND
+    ),
+    dp.Select(name="results"),
+)
 dp.serve_app(v)
