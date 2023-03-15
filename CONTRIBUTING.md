@@ -10,12 +10,18 @@ Overview of how to add examples to this repo
   - **not both**
 - **must** include calling `dp.serve_app`
 - **may** have additional files
+- **may** have a custom `requirements.txt` file for dependencies
+  - **should** symlink `requirements-base.txt` to `../../requirements.txt`
 
 ### Deploying
 
 We deploy by bundling the contents of the app directory.
 The app file is executed as a python script on the remote server.
 
+If an App fails to deploy with OOM errors:
+```sh
+fly scale memory -a '<app name>' 1024
+```
 
 ## Structure of a Report
 
