@@ -158,7 +158,15 @@ def main():
     if invalid_apps:
         raise RuntimeError(f"Invalid apps found!: {invalid_apps}")
 
-    for app_dir in APP_DIRS:
+    try:
+        app_name = sys.argv[1]
+    except IndexError:
+        app_dirs = APP_DIRS
+    else:
+        app_name = app_name.removeprefix('apps/')
+        app_dirs = [d for d in APP_DIRS if d.name == app_name]
+
+    for app_dir in app_dirs:
         print(f"deploying {app_dir=}")
         if not _fly_app_exists(app_dir):
             _fly_create_app(app_dir)
