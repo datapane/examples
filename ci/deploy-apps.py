@@ -12,7 +12,6 @@ import shutil
 
 CI_DIR = Path(__file__).parent
 WORKSPACE_DIR = CI_DIR.parent
-APP_DIRS = sorted([d for d in (WORKSPACE_DIR / "apps").iterdir() if d.is_dir()])
 REQUIREMENTS_TXT = WORKSPACE_DIR / "requirements.txt"
 
 # fly expects these as relative paths, not asolutes
@@ -29,6 +28,17 @@ _STATIC_NONCE = "1164c73e"
 
 # determine with `fly orgs list`
 _FLY_ORG_SLUG = "leo-anthias"
+
+
+EXCLUDED_APPS = [
+    "background-remover",  # takes too long to boot
+    "chatgpt-analyzer",  # depends on datapane-components
+    "dataset-scatterplot",  # depends on datapane-components
+    "stock-reporting",  # depends on datapane-components
+
+]
+APP_DIRS = sorted([d for d in (WORKSPACE_DIR / "apps").iterdir() if d.is_dir() and d.name not in EXCLUDED_APPS])
+
 
 
 @contextmanager
@@ -154,17 +164,19 @@ def _fly_deploy(app_dir: Path):
 
 
 def main():
-    invalid_apps = [app_dir for app_dir in APP_DIRS if not is_valid_app(app_dir)]
-    if invalid_apps:
-        raise RuntimeError(f"Invalid apps found!: {invalid_apps}")
-
+    app_dirs = APP_DIRS
     try:
         app_name = sys.argv[1]
     except IndexError:
-        app_dirs = APP_DIRS
+        pass
     else:
         app_name = app_name.removeprefix('apps/')
-        app_dirs = [d for d in APP_DIRS if d.name == app_name]
+        app_dirs = [d for d in app_dirs if d.name == app_name]
+
+    invalid_apps = [d for d in app_dirs if not is_valid_app(d)]
+    if invalid_apps:
+        raise RuntimeError(f"Invalid apps found!: {invalid_apps}")
+
 
     for app_dir in app_dirs:
         print(f"deploying {app_dir=}")
