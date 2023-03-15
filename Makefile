@@ -1,14 +1,11 @@
-
+.PHONY: FORCE
+FORCE:
 
 
 # We assume naming of `<type>.<ext>`: where `type` is `app` or `report`
 PY_REPORT = report.py
 IPYNB_REPORT = report.ipynb
-PY_APP = app.py
-IPYNB_APP = app.ipynb
 
-PY_APPS := $(dir $(wildcard apps/*/app.py))
-IPYNB_APPS := $(dir $(wildcard apps/*/app.ipynb))
 PY_REPORTS := $(dir $(wildcard reports/*/report.py))
 IPYNB_REPORTS := $(dir $(wildcard reports/*/report.ipynb))
 
@@ -18,23 +15,16 @@ IPYNB_REPORTS := $(dir $(wildcard reports/*/report.ipynb))
 define striptailslash
 	$(patsubst %/,%,$(1))
 endef
-PY_APPS_TARGETS := $(PY_APPS) $(call striptailslash,$(PY_APPS))
-IPYNB_APPS_TARGETS := $(IPYNB_APPS) $(call striptailslash,$(IPYNB_APPS))
 PY_REPORTS_TARGETS := $(PY_REPORTS) $(call striptailslash,$(PY_REPORTS))
 IPYNB_REPORTS_TARGETS := $(IPYNB_REPORTS) $(call striptailslash,$(IPYNB_REPORTS))
 
 REPORTS := $(PY_REPORTS) $(IPYNB_REPORTS)
-APPS := $(PY_APPS) $(IPYNB_APPS)
 
 .PHONY: debug
 debug:
 	@echo "REPORTS: $(REPORTS)"
 	@echo "PY_REPORTS: $(PY_REPORTS_TARGETS)"
 	@echo "IPYNB_REPORTS: $(IPYNB_REPORTS_TARGETS)"
-	@echo ""
-	@echo "APPS: $(APPS)"
-	@echo "PY_APPS: $(PY_APPS_TARGETS)"
-	@echo "IPYNB_APPS: $(IPYNB_APPS_TARGETS)"
 
 disable-analytics:
 	touch ~/.config/datapane/no_analytics
@@ -48,6 +38,19 @@ endif
 install:
 	python -m pip install requirements.txt
 
+# Static artifacts for bundling Apps
+ci/nb.Dockerfile:
+	@echo "Building $@"
+	rm "$@"
+	datapane app generate dockerfile --app-file "$(IPYNB_APP)" -o "$@"
+
+ci/py.Dockerfile:
+	@echo "Building $@"
+	rm "$@"
+	datapane app generate dockerfile --app-file "$(PY_APP)" -o "$@"
+
+.PHONY: dockerfiles ci/nb.Dockerfile ci/py.Dockerfile
+dockerfiles: ci/nb.Dockerfile ci/py.Dockerfile
 
 .PHONY: $(PY_REPORTS_TARGETS)
 $(PY_REPORTS_TARGETS):
@@ -64,18 +67,9 @@ $(IPYNB_REPORTS_TARGETS):
 			--out - \
 		| python -
 
-.PHONY: $(PY_APPS_TARGETS)
-$(PY_APPS_TARGETS):
-	@echo "Building $@"
-	# TODO
+.PHONY: deploy-reports
+deploy-reports: $(REPORTS)
 
-.PHONY: $(IPYNB_APPS_TARGETS)
-$(IPYNB_APPS_TARGETS):
-	@echo "Building $@"
-	# TODO
-
-.PHONY: reports
-reports: $(REPORTS)
-
-.PHONY: apps
-apps: $(APPS)
+.PHONY: deploy-apps
+deploy-apps:
+	python ci/deploy-apps.py
