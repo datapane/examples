@@ -8,7 +8,7 @@ endif
 	datapane login --token "$${DATAPANE_TOKEN}"
 
 install:
-	python -m pip install requirements.txt
+	python -m pip install -r requirements.txt
 
 .PHONY: deploy-reports
 deploy-reports:
