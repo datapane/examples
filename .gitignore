@@ -57,3 +57,7 @@ dp-tenant.bak.json
 gha-creds-*.json
 .ruff_cache
 .ipynb_checkpoints
+
+
+# reports generate html files
+*.html
