@@ -1,4 +1,5 @@
 disable-analytics:
+	mkdir -p ~/.config/datapane
 	touch ~/.config/datapane/no_analytics
 
 login:

@@ -27,6 +27,11 @@ jobs:
       - name: Install dependencies
         run: make install
 
+      - name: Configure Datapane
+        run: |
+          # note: no login required for Apps
+          make disable-analytics
+
       - name: Deploy Apps to Fly
         run: |
           make deploy-apps
