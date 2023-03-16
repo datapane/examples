@@ -9,3 +9,4 @@ duckdb
 openai
 seaborn>=0.12.0
 pytrends>=4.0.0
+sh==2.0.2

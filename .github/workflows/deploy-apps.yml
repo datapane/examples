@@ -1,0 +1,40 @@
+name: Deploy Apps
+on:
+  push:
+    branches:
+      - main
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  main:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.10
+
+      # note: no pinned versions have this action yet
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+        with:
+          # pinned version, as flyctl doesn't really provide a stable scripting interface
+          version: 0.0.487
+
+      - name: Install dependencies
+        run: make install
+
+      # - name: Configure Datapane
+      #   run: |
+      #     make disable-analytics
+      #     make login
+      #   env:
+      #     DATAPANE_TOKEN: ${{ secrets.DATAPANE_TOKEN }}
+
+      - name: Deploy Apps to Fly
+        run: |
+          make deploy-apps
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
