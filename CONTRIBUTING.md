@@ -30,6 +30,8 @@ fly scale memory -a '<app name>' 1024
   - **not both**
 - **must** include calling `dp.upload_report`
   - **may** use `dp.save_report`, as per ["Supporting upload and save"](#supporting-upload-and-save)
+- **must not** include its own `requirements.txt`
+  - we currently run all reports against the shared dependencies only.
 
 ### Deploying
 
@@ -45,7 +47,7 @@ This can be used to select the action a report takes:
 ```py
 import os
 if os.environ.get('DATAPANE_DEPLOY') == "1":
-    dp.upload_report(v, "Text Heavy Report", open=True)
+    dp.upload_report(v, "Text Heavy Report")
 else:
     dp.save_report(v, path="report.html", open=True)
 ```
