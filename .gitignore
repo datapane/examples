@@ -61,3 +61,5 @@ gha-creds-*.json
 
 # reports generate html files
 *.html
+
+!/datapane_components-0.0.0-py3-none-any.whl

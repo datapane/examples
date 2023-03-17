@@ -14,6 +14,9 @@ CI_DIR = Path(__file__).parent
 WORKSPACE_DIR = CI_DIR.parent
 REQUIREMENTS_TXT = WORKSPACE_DIR / "requirements.txt"
 
+DP_COMPONENTS_WHL_NAME = "datapane_components-0.0.0-py3-none-any.whl"
+DP_COMPONENTS_WHL = WORKSPACE_DIR / DP_COMPONENTS_WHL_NAME
+
 # fly expects these as relative paths, not asolutes
 # Error failed to fetch an image or build from source: Dockerfile '~/work/datapane/examples/apps/startup-calculator/~/work/datapane/examples/ci/py.Dockerfile' not found
 PY_DOCKERFILE = "../../ci/py.Dockerfile"
@@ -32,9 +35,7 @@ _FLY_ORG_SLUG = "leo-anthias"
 
 EXCLUDED_APPS = [
     "background-remover",  # takes too long to boot
-    "chatgpt-analyzer",  # depends on datapane-components
-    "dataset-scatterplot",  # depends on datapane-components
-    "stock-reporting",  # depends on datapane-components
+    "stock-reporting",  # Error on boot
 
 ]
 APP_DIRS = sorted([d for d in (WORKSPACE_DIR / "apps").iterdir() if d.is_dir() and d.name not in EXCLUDED_APPS])
@@ -95,9 +96,14 @@ def requirement_files(app_dir: Path):
     else:
         requirements_cm = nullcontext()
 
+    # hack: until dp-components is published
+    dp_components_wheel = app_dir / DP_COMPONENTS_WHL_NAME
+    dp_components_cm = _tmp_cpy(DP_COMPONENTS_WHL, dp_components_wheel)
+
     with base_cm:
         with requirements_cm:
-            yield
+            with dp_components_cm:
+                yield
 
 
 def is_py_app(app_dir: Path):
