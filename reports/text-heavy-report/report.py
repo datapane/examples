@@ -131,4 +131,4 @@ dp.save_report(v, path="report.html", open=True)
 
 import os
 if os.getenv("DATAPANE_DEPLOY") == "1":
-    dp.upload_report(v, "Text Heavy Report", open=True)
+    dp.upload_report(v, "Text Heavy Report", publicly_visible=True)
