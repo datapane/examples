@@ -46,7 +46,7 @@ This can be used to select the action a report takes:
 
 ```py
 import os
-if os.environ.get('DATAPANE_DEPLOY') == "1":
+if os.getenv('DATAPANE_DEPLOY') == "1":
     dp.upload_report(v, "Text Heavy Report")
 else:
     dp.save_report(v, path="report.html", open=True)

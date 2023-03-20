@@ -128,5 +128,7 @@ v = dp.Blocks(
 )
 
 dp.save_report(v, path="report.html", open=True)
-# uncomment to upload to DPCloud
-# dp.upload_report(v, "Text Heavy Report", open=True)
+
+import os
+if os.getenv("DATAPANE_DEPLOY") == "1":
+    dp.upload_report(v, "Text Heavy Report", open=True)
