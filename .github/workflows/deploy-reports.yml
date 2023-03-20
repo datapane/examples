@@ -30,4 +30,4 @@ jobs:
 
       - name: Run + Deploy Reports
         run: |
-          make reports
+          make deploy-reports
