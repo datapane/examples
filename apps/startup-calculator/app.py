@@ -2,154 +2,102 @@ import altair as alt
 import pandas as pd
 import datapane as dp
 
+def required_growth_rate(current_cash, initial_revenue, monthly_burn):
+    weeks = 24 * 4  # 2 years * 12 months * 4 weeks
+    weekly_burn = monthly_burn / 4.345  # Convert the monthly burn to weekly burn
 
+    for growth_rate in range(0, 101):  # Check growth rates between 0% and 100%
+        cash_left = current_cash
+        is_profitable = True
+        for week in range(weeks):
+            revenue = initial_revenue * ((1 + growth_rate / 100) ** week)
+            cash_left += revenue - weekly_burn
+
+            if cash_left < 0:
+                is_profitable = False
+                break
+
+        if is_profitable:
+            return growth_rate
+
+    return None  # No growth rate found that leads to profitability without running out of money
+
+  
 def calculate_runway(
     current_cash: float,
     initial_revenue: float,
     monthly_burn: float,
     weekly_growth_percent: float,
-    forecast_length_years: int,
-    cash_injection: float,
-    cash_injection_offset: int,
 ) -> dp.Blocks:
-    forecast_length_days = 365 * forecast_length_years
-    monthly_growth_rate = pow((1 + weekly_growth_percent / 100), 4) - 1
-    today = pd.to_datetime("today")
-    end_forecast = today + pd.Timedelta(forecast_length_days, unit="d")
+  
+    weeks = 104  # 2 years * 52 weeks
+    data = []
 
-    # empty df
-    df = pd.DataFrame(columns=[])
-    idx = pd.date_range(today, end_forecast, freq="m")
-    df = df.reindex(idx, fill_value=0)
-    df.index.names = ["date"]
-    df.reset_index(inplace=True)
+    for week in range(weeks):
+        revenue = initial_revenue * ((1 + weekly_growth_percent / 100) ** week)
+        if week == 0:
+            cash_left = current_cash + revenue - (monthly_burn / 4)
+        else:
+            cash_left = data[-1]['Cash_Left'] + revenue - (monthly_burn / 4)
+        
+        data.append({'Week': week + 1, 'Revenue': revenue, 'Cash_Left': cash_left})
 
-    df["burn"] = monthly_burn  # Burn remains constant for now.
-    df["revenue_0g"] = initial_revenue
-    df["injection"] = 0
+    forecast_df = pd.DataFrame(data)
+    
+    required_growth = required_growth_rate(current_cash, initial_revenue, monthly_burn)
 
-    # Set initial cash and revenue
-    df.loc[0, "cash_0g"] = current_cash
-    df.loc[0, "cash_dg"] = current_cash
-    df.loc[0, "revenue_dg"] = initial_revenue
-
-    # Cas injection (e.g. R&D tax or fundraise)
-    df.loc[cash_injection_offset + 1, "injection"] = cash_injection  # 0dx adjustment
-
-    for i in range(1, len(df)):
-        prev = df.loc[i - 1]
-        df.loc[i, "cash_0g"] = prev["cash_0g"] - prev["burn"] + prev["injection"] + prev["revenue_0g"]
-        df.loc[i, "cash_dg"] = prev["cash_dg"] - prev["burn"] + prev["injection"] + prev["revenue_dg"]
-        df.loc[i, "revenue_dg"] = prev["revenue_dg"] * (1 + monthly_growth_rate)
-
-    start_revenue = initial_revenue if initial_revenue > 100 else 100
-    scale = (-current_cash, current_cash * 2)
-
-    monthly_growth_percent = weekly_growth_percent * 4
-
-    slider = alt.binding_range(min=0, max=100, step=0.1, name="Monthly growth rate (%)")
-    selector = alt.selection_single(
-        fields=["month_growth"],
-        bind=slider,
-        init={"month_growth": monthly_growth_percent},
+    # Convert weekly data to monthly data
+    forecast_df['Month'] = (forecast_df['Week'] + 3) // 4
+    monthly_forecast = forecast_df.groupby('Month').agg({'Revenue': 'sum', 'Cash_Left': 'last'}).reset_index()
+    
+    # Define a shared base for both charts
+    base = alt.Chart(monthly_forecast).encode(
+        x=alt.X('Month:Q', title='Month'),
+        tooltip=['Month']
+    ).properties(title='Revenue and Cash Left Forecast (Monthly)')
+    
+    # Create a line chart for Revenue using the shared base
+    revenue_chart = base.mark_line(color='blue').encode(
+        y=alt.Y('Revenue:Q', title='Amount'),
+        tooltip=['Month', 'Revenue']
     )
-
-    base = (
-        alt.Chart(df[["date", "cash_0g"]])
-        .transform_window(
-            # Use count() to find out the current month we're on (i.e. the index),
-            # as we use that as the power for our growth rate
-            index="count()"
-        )
-        .transform_calculate(
-            # Transform a % growth rate (i.e. 7) into sometime useful (i.e. 1.07).
-            # Raise that to our current month (i.e. for month 2, 1.07 ** 2 = ~1.145), and
-            # multiply that by our revenue amount (~1.145 * 500)
-            forecast_revenue=((1 + (selector.month_growth / 100)) ** alt.datum.index)
-            * start_revenue
-        )
-        .transform_window(
-            # Take what is in practice the cumulative product of revenue (i.e. total revenue earned so far)
-            forecast_total_revenue="sum(forecast_revenue)",
-            frame=[None, 0],
-        )
-        .transform_calculate(
-            # Add cumprod to current cash to find cash standing (i.e. if we have £100k cash,
-            # and 10 months of £10k revenue, we have £200k now)
-            adj_cash=alt.datum.cash_0g
-            + alt.datum.forecast_total_revenue
-        )
-        .encode(x="yearmonth(date):T")
+    
+    # Create an area chart for Cash Left using the shared base
+    cash_chart = base.mark_area(opacity=0.3, color='green').encode(
+        y=alt.Y('Cash_Left:Q', title='Amount'),
+        tooltip=['Month', 'Cash_Left']
     )
-
-    cash = base.encode(y=alt.Y("adj_cash:Q", scale=alt.Scale(domain=scale))).mark_area(opacity=0.75)
-    revenue = base.encode(y="forecast_total_revenue:Q").mark_line(color="#f26522", size=5)
-    revenue_growth = base.encode(y="forecast_revenue:Q").mark_line(color="purple", size=5)
-
-    charts = cash + revenue + revenue_growth
-
-    chart_final = charts.add_selection(selector).interactive().properties(width="container")
-
-    return dp.Blocks(
-        dp.Group(
-            blocks=[
-                dp.BigNumber(value=f"${round(monthly_burn)}", heading="Monthly outgoings"),
-                dp.BigNumber(
-                    value=f"${current_cash}",
-                    heading="Cash in bank",
-                    is_upward_change=True,
-                    change=7,
-                ),
-            ],
-            columns=2,
-        ),
-        dp.Select(
-            blocks=[
-                dp.Group(
-                    blocks=[
-                        """This plot models cash and revenue, dependent on various other growth scenarios and based on this month's burn. 
-                    - Blue area is cash remaining
-                    - Orange line is the cumulative sum of all revenue
-                    - Purple line is monthly revenue
-                    > Drag the slider to adjust growth rate. The growth rate at which the blue area never crosses 0 is the growth you need to achieve **[Default Alive](http://paulgraham.com/aord.html)**.
-                    """,
-                        chart_final,
-                    ],
-                    label="Interactive Plot",
-                ),
-                dp.Group(
-                    blocks=[
-                        "> In this dataset, `cash_0g`/`revenue_0g` presumes no further growth, whereas "
-                        + "`cash_dg`/`revenue_dg` presumes growth at the current rate continues.",
-                        dp.DataTable(df),
-                    ],
-                    label="Interactive Dataset",
-                ),
-            ]
-        ),
-    )
-
+    
+    # Combine both charts and make them interactive
+    combined_chart = alt.layer(revenue_chart, cash_chart).interactive()
+  
+    return [
+        dp.BigNumber(value=f"{required_growth}%", heading="Required weekly growth rate"),
+        combined_chart,
+        forecast_df
+    ]
 
 # main view and controls
 controls = dict(
-    current_cash=dp.NumberBox(initial=10000),
-    forecast_length_years=dp.Range(min=1, max=10, initial=1),
-    weekly_growth_percent=dp.NumberBox(),
-    initial_revenue=dp.NumberBox(),
-    monthly_burn=dp.NumberBox(),
-    cash_injection=dp.NumberBox(),
-    cash_injection_offset=dp.NumberBox(),
+    current_cash=dp.NumberBox(initial=350000),
+    weekly_growth_percent=dp.NumberBox(initial=7),
+    initial_revenue=dp.NumberBox(initial=500),
+    monthly_burn=dp.NumberBox(initial=35000),
 )
 
 v = dp.View(
-    "# Finance model",
+    "## Finance growth calculator",
     dp.Group(
         dp.Form(
             controls=controls,
             on_submit=calculate_runway,
-            target="result",
+            target="result"
         ),
-        dp.Empty(name="result"),
+        dp.Group(
+          dp.Text("Enter your inputs on the left. Your results will appear here."),
+          *calculate_runway(current_cash=350000, weekly_growth_percent=7, initial_revenue=500, monthly_burn=35000),
+          name='result'
+        ),
         columns=2,
         widths=[1, 3],
     ),
