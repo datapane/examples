@@ -118,7 +118,7 @@ text_group = dp.Text(file="article.md").format(
 )
 
 # build the main report and save it
-v = dp.Blocks(
+v = dp.View(
     banner_block,
     dp.Text("# Non-Dominated Sorting"),
     dp.Text(
@@ -129,6 +129,5 @@ v = dp.Blocks(
 
 dp.save_report(v, path="report.html", open=True)
 
-import os
-if os.getenv("DATAPANE_DEPLOY") == "1":
-    dp.upload_report(v, "Text Heavy Report", publicly_visible=True)
+# Run this to upload this report to Datapane Cloud
+dp.upload_report(v, "Text Heavy Report", publicly_visible=True)

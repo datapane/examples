@@ -32,7 +32,7 @@ def upload_dataset(params: t.Dict, session: t.Dict) -> dp.View:
     numeric_columns = list(df.select_dtypes(include=[np.number]))
     non_numeric_columns = list(set(columns).difference(numeric_columns))
     session["df"] = df
-  
+
     plot_controls = dp.Controls(
         x_axis=dp.Choice(options=numeric_columns, initial=numeric_columns[0]),
         y_axis=dp.Choice(options=numeric_columns, initial=numeric_columns[-1]),

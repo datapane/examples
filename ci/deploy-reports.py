@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 from contextlib import contextmanager
-from glob import glob
 from operator import xor
 import os
 from pathlib import Path
@@ -12,26 +11,15 @@ import sh
 CI_DIR = Path(__file__).parent
 WORKSPACE_DIR = CI_DIR.parent
 EXCLUDED_REPORTS = [
-    "sales-report", # hangs on `plot4.show()`
-    "sqlite-dashboard",  # hangs on `employee_sales_monthly.show()`
-    "stock-reporting",  # hangs on `fig0.show()`
-    "superstore-reporting",  # hangs on `fig0.show()`
     "text-heavy-report",  # reports currently only deploy with shared requirements
 ]
-REPORT_DIRS = sorted([
-    d
-    for d in (WORKSPACE_DIR / "reports").iterdir()
-    if d.is_dir()
-    and d.name not in EXCLUDED_REPORTS
-])
+REPORT_DIRS = sorted(
+    [d for d in (WORKSPACE_DIR / "reports").iterdir() if d.is_dir() and d.name not in EXCLUDED_REPORTS]
+)
 
 _run_py = sh.python.bake()
-_run_py_traced = sh.python.bake(
-    "-m", "trace", "-t", "-g",
-    # We only care about tracing our code
-    # Exclude python + dependencies
-    ignore_dir=os.pathsep.join(sys.path)
-)
+# We only care about tracing our code, Exclude python + dependencies
+_run_py_traced = sh.python.bake("-m", "trace", "-t", "-g", ignore_dir=os.pathsep.join(sys.path))
 
 TRACE = os.environ.get("DP_REPORT_TRACE", "0").lower() in ("1", "true")
 if TRACE:
@@ -41,6 +29,8 @@ else:
 
 
 _log_context = ""
+
+
 def log(*args, **kwargs):
     prefix = f"report({_log_context}):" if _log_context else ""
     print(prefix, *args, **kwargs)
@@ -63,12 +53,19 @@ def run_py_report(report_dir: Path, script_name: str = "report.py"):
 
     # Always execute from their directory, so that assets can be loaded
     with sh.pushd(report_dir):
-        run_py(script_name, _fg=True, _env={
-            # alias to the 'true' command, so that browsers don't open
-            "BROWSER": "true",
-            # flag so reports can alter behaviour between dev + deploy
-            "DATAPANE_DEPLOY": "1",
-        })
+        run_py(
+            script_name,
+            _fg=True,
+            _env={
+                # alias to the 'true' command, so that browsers don't open
+                "BROWSER": "true",
+                # flag so reports can alter behaviour between dev + deploy
+                "DATAPANE_DEPLOY": "1",
+                # ensure we use non-interactive rendering backends
+                "MPLBACKEND": "svg",
+                "PLOTLY_RENDERER": "json",
+            },
+        )
 
 
 @contextmanager
@@ -120,9 +117,10 @@ def main():
     except IndexError:
         pass
     else:
-        name = name.removeprefix('reports/')
+        name = name.removeprefix("reports/")
         dirs = [d for d in dirs if d.name == name]
 
+    log(dirs)
     for dir in dirs:
         _log_context = dir.name
         run_report(dir)
