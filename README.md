@@ -32,13 +32,42 @@ Hi there! 👋
 
 This repository contains a collection of examples that demonstrate how to use Datapane to create and share data reports and apps.
 
-1. Run `pip install -r requirements.py` from an example folder to install dependencies.
+1. Run `pip install -r requirements.txt` from an example folder to install dependencies.
 1. Depending on the format of the example, either run:
     - the notebook, e.g. `app.ipynb`, through Jupyter Lab,
-    - the script, e.g. `python app.py`)
+    - the script, e.g. `python app.py`
 1. View the output, either,
     - For Apps, visit the URL printed to the terminal/cell output, usually http://127.0.0.1:8080.
     - For Reports, open the saved report locally or the uploaded report on Datapane Clodd
+
+### Apps
+
+- [Airport Mapper](./apps/airport-mapper/app.py)
+- [Image Background Remover](./apps/background-remover/app.py)
+- [ChatGPT Powered Analysis](./apps/chatgpt-analyzer/app.py)
+- [Data Scatterplot](./apps/dataset-scatterplot/app.py)
+- [Datatable Demo](./apps/datatable-demo/app.py)
+- [Google Trends](./apps/google-trends/app.py)
+- [Image Pipeline Articulation](./apps/image-pipeline-articulation/app.ipynb)
+- [Iris Plotter](./apps/iris-plotter/app.py)
+- [Startup Calculator](./apps/startup-calculator/app.py)
+- [Stock Dashboard](./apps/stock-dashboard/app.py)
+- [Stock Reporting](./apps/stock-reporting/app.py)
+- [Stock Ticker](./apps/stock-ticker/app.py)
+- [Kaggle Survey Analysis](./apps/survey-data-app/app.ipynb)
+
+### Reports
+
+- [Hello, World!](./reports/hello-world/report.ipynb)
+- [Classifier Dashboard](./reports/classifier-dashboard/report.ipynb)
+- [Machine Learning Pipeline](./reports/machine-learning-pipeline/report.ipynb)
+- [Sales](./reports/sales-report/report.ipynb)
+- [Social Media Dashboard](./reports/social-media-dashboard/report.ipynb)
+- [Sqlite Dashboard](./reports/sqlite-dashboard/report.ipynb)
+- [Stock Reporting](./reports/stock-reporting/report.ipynb)
+- [Superstore Reporting](./reports/superstore-reporting/report.ipynb)
+- [Kaggle Survey](./reports/survey-data-report/report.ipynb)
+- [Text Heavy](./reports/text-heavy-report/report.py)
 
 ## Resources
 
