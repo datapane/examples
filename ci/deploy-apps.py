@@ -29,8 +29,7 @@ _FLY_ORG_SLUG = "leo-anthias"
 
 
 EXCLUDED_APPS = [
-    "stock-reporting",
-    "background-remover"
+    # "stock-reporting",
 ]
 APP_DIRS = sorted([d for d in (WORKSPACE_DIR / "apps").iterdir() if d.is_dir() and d.name not in EXCLUDED_APPS])
 
