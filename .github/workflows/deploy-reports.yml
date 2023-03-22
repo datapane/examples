@@ -8,6 +8,9 @@ defaults:
   run:
     shell: bash
 
+concurrency:
+  group: deploy-reports
+
 jobs:
   main:
     runs-on: ubuntu-22.04
