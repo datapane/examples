@@ -1,7 +1,6 @@
 import typing as t
 
 import datapane as dp
-import duckdb
 import altair as alt
 from vega_datasets import data
 
