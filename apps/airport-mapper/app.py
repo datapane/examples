@@ -20,10 +20,11 @@ background = (
 # data
 df = data.airports()
 
+
 def get_sample(params: t.Dict) -> t.List:
     state = params["state"]
-    sample = df[df['state'] == state]
-    
+    sample = df[df["state"] == state]
+
     points = (
         alt.Chart(sample)
         .mark_circle(color="#4f46e5")
