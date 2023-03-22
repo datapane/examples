@@ -41,7 +41,7 @@ def load_file(params: t.Dict, session: t.Dict) -> t.List:
             swap=dp.Swap.PREPEND,
             controls=dict(
                 user_question=dp.TextBox(label="What do you want to know?"),
-                question_type=dp.Choice(label="What type of result?", options=["Visualization", "Dataset"]),
+                question_type=dp.Choice(label="What type of result?", options=["Dataset", "Visualization"]),
             ),
         ),
         dp.Group("Your results will appear here!", name="results"),
