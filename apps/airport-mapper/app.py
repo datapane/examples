@@ -20,15 +20,11 @@ background = (
 
 # data
 df = data.airports()
-con = duckdb.connect()
-con.execute("CREATE TABLE my_table AS SELECT * FROM df")
-con.execute("INSERT INTO my_table SELECT * FROM df")
-
 
 def get_sample(params: t.Dict) -> t.List:
-    display_name = params["state"]
-    sample = con.execute(f"SELECT * FROM my_table WHERE state = '{display_name}'").df()
-
+    state = params["state"]
+    sample = df[df['state'] == state]
+    
     points = (
         alt.Chart(sample)
         .mark_circle(color="#4f46e5")
