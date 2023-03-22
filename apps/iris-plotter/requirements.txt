@@ -1,0 +1,5 @@
+pandas
+altair
+datapane
+seaborn
+vega_datasets
