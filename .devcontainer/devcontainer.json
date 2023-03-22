@@ -1,0 +1,23 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "waitFor": "onCreateCommand",
+  "updateContentCommand": "python3 -m pip install -r requirements.txt",
+  //"postCreateCommand": "",
+  "forwardPorts": [
+    8080
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-toolsai.jupyter",
+        "ms-python.python"
+      ],
+      "settings": {
+        "github.codespaces.defaultExtensions": [
+          "ms-toolsai.jupyter",
+          "ms-python.python"
+        ]
+      }
+    }
+  }
+}

@@ -28,11 +28,13 @@
 
 Hi there! 👋
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=587390080&devcontainer_path=.devcontainer%2Fdevcontainer.json)
+
 This repository contains a collection of examples that demonstrate how to use Datapane to create and share data reports and apps.
 
 1. Run `pip install -r requirements.py` from an example folder to install dependencies.
 1. Depending on the format of the example, either run:
-    - the notebook, e.g. `app.ipynb`, through Jupyter Lab, 
+    - the notebook, e.g. `app.ipynb`, through Jupyter Lab,
     - the script, e.g. `python app.py`)
 1. View the output, either,
     - For Apps, visit the URL printed to the terminal/cell output, usually http://127.0.0.1:8080.
