@@ -159,8 +159,6 @@ def process(ticker1: str, ticker2: str = "GOOG") -> dp.View:
     )
 
 
-process("MSFT", "GOOG")
-
 controls = dp.Controls(
     ticker1=dp.TextBox(label="Ticker", initial="MSFT"),
     ticker2=dp.TextBox(label="(Optional) Comparison Ticker", initial="GOOG", allow_empty=True),

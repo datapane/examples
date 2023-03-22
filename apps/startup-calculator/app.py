@@ -21,7 +21,7 @@ def required_growth_rate(current_cash, initial_revenue, monthly_burn):
         if is_profitable:
             return growth_rate
 
-    return None  # No growth rate found that leads to profitability without running out of money
+    return None  # No growth rate found that leads to profitability without running out of money - uh oh!
 
 
 def calculate_runway(
@@ -29,7 +29,7 @@ def calculate_runway(
     initial_revenue: float,
     monthly_burn: float,
     weekly_growth_percent: float,
-) -> dp.Blocks:
+) -> dp.View:
     weeks = 104  # 2 years * 52 weeks
     data = []
 
@@ -70,11 +70,11 @@ def calculate_runway(
     # Combine both charts and make them interactive
     combined_chart = alt.layer(revenue_chart, cash_chart).interactive()
 
-    return [
+    return dp.View(
         dp.BigNumber(value=f"{required_growth}%", heading="Required weekly growth rate"),
         combined_chart,
         forecast_df,
-    ]
+    )
 
 
 # main view and controls
