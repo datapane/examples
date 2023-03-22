@@ -21,3 +21,5 @@ This sample Datapane App demonstrates,
 ## Requirements
 
 - `pytrends`
+
+**NOTE** - this app may not always work due to Google changing the API used by the `pytrends` library

@@ -24,8 +24,8 @@ def process(ticker1: str, ticker2: str = "GOOG") -> dp.View:
     start = date.today() - timedelta(365)
     end = date.today() + timedelta(2)
     # get the data
-    df1 = yf.download(ticker1, start=start, end=end).reset_index()  # ["Adj Close"]).reset_index()
-    df2 = yf.download(ticker2, start=start, end=end).reset_index()  # ["Adj Close"]).reset_index()
+    df1 = yf.download(ticker1, start=start, end=end, interval="1d").reset_index()  # ["Adj Close"]).reset_index()
+    df2 = yf.download(ticker2, start=start, end=end, interval="1d").reset_index()  # ["Adj Close"]).reset_index()
     df1["Date"] = pd.to_datetime(df1["Date"], format="%d/%m/%Y")
     df2["Date"] = pd.to_datetime(df2["Date"], format="%d/%m/%Y")
     orig_df1 = df1.copy(deep=True)
@@ -119,7 +119,9 @@ def process(ticker1: str, ticker2: str = "GOOG") -> dp.View:
 
     # Building the output Datapane View
     # Now that we have a series of plots, we can construct our custom View.
-    # In addition to the visualizations, this View includes Datapane's `BigNumber` component to display today's stock prices, and our `DataTable` component to allow our viewers to filter, explore, and download the data themselves.
+    # In addition to the visualizations, this View includes Datapane's `BigNumber` component to
+    # display today's stock prices, and our `DataTable` component to allow our viewers to filter,
+    # explore, and download the data themselves.
     # We can build a more powerful report by using Datapane's layout components.
     # e.g. using `Group` to place the `BigNumber` blocks in two columns, and `Select` block to add multiple tabs.
 

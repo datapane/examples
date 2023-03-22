@@ -3,6 +3,7 @@ import typing as t
 import datapane as dp
 import pandas as pd
 import altair as alt
+import numpy as np
 
 import datapane_components as dc
 from datapane_components import datasets
@@ -28,12 +29,14 @@ def plot_dataset(params: t.Dict, session: t.Dict) -> dp.Plot:
 def upload_dataset(params: t.Dict, session: t.Dict) -> dp.View:
     df = datasets.load_dataset(params)
     columns = list(df.columns)
+    numeric_columns = list(df.select_dtypes(include=[np.number]))
+    non_numeric_columns = list(set(columns).difference(numeric_columns))
     session["df"] = df
 
     plot_controls = dp.Controls(
-        x_axis=dp.Choice(options=columns, initial=columns[0]),
-        y_axis=dp.Choice(options=columns, initial=columns[0]),
-        color=dp.Choice(options=columns, initial=columns[0]),
+        x_axis=dp.Choice(options=numeric_columns, initial=numeric_columns[0]),
+        y_axis=dp.Choice(options=numeric_columns, initial=numeric_columns[-1]),
+        color=dp.Choice(options=non_numeric_columns, initial=non_numeric_columns[0]),
     )
 
     return dp.View(
