@@ -9,7 +9,7 @@
   "customizations": {
     "codespaces": {
       "openFiles": [
-        "getting_started.md"
+        "cs_get_started.md"
       ]
     },
     "vscode": {
