@@ -21,7 +21,12 @@
         "github.codespaces.defaultExtensions": [
           "ms-toolsai.jupyter",
           "ms-python.python"
-        ]
+        ],
+        "markdown.preview.doubleClickToSwitchToEditor": true,
+        "workbench.editorAssociations": {
+          "*.md": "vscode.markdown.preview.editor",
+          "*.ipynb": "jupyter-notebook"
+        }
       }
     }
   }
