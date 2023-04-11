@@ -6,9 +6,8 @@
 <p align="center">
   <a href="https://datapane.com/cloud">Cloud</a> |
   <a href="https://docs.datapane.com">Docs</a> |
-      <a href="#demos-and-examples">Examples</a> |
-  <a href="https://datapane.nolt.io">Roadmap</a> | <a href="https://forum.datapane.com">Forum</a> |
-  <a href="https://chat.datapane.com">Discord</a>
+  <a href="#demos-and-examples">Examples</a> |
+  <a href="https://forum.datapane.com">Discuss</a>
 </p>
 <p align='center'>
   <a href="https://pypi.org/project/datapane/">
@@ -73,11 +72,10 @@ This repository contains a collection of examples that demonstrate how to use Da
 
 We're here to help you get up and running with Datapane. Check out the [Datapane quickstart repo](https://github.com/datapane/dp-quickstart/) to get started, or visit any of the resources below.
 
-- [Join Discord](https://chat.datapane.com)
-- [Sign up for a free account](https://datapane.com/accounts/signup)
+- [View Examples](https://github.com/datapane/examples)
 - [Read the documentation](https://docs.datapane.com)
-- [Ask a question](https://forum.datapane.com/)
-
+- [Discuss with the community](https://forum.datapane.com/)
+- [Sign up for a free Cloud account](https://cloud.datapane.com/accounts/signup)
 
 ## What makes Datapane special?
 
