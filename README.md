@@ -4,9 +4,10 @@
   </a>
 </p>
 <p align="center">
-  <a href="https://datapane.com/cloud">Cloud</a> |
+  <a href="https://datapane.com">Home</a> |
   <a href="https://docs.datapane.com">Docs</a> |
-  <a href="#demos-and-examples">Examples</a> |
+  <a href="https://datapane.com/gallery">Gallery</a> |
+  <a href="https://github.com/datapane/examples">Examples</a> |
   <a href="https://forum.datapane.com">Discuss</a>
 </p>
 <p align='center'>
