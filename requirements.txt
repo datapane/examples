@@ -2,6 +2,8 @@ datapane>=0.16.2
 # ./datapane_components-0.0.0-py3-none-any.whl
 datapane-components
 scikit-learn
+scipy
+seaborn
 matplotlib>=3.2.0
 scikit-image
 pooch
