@@ -43,4 +43,4 @@ You can also check out various examples, from [Apps](./apps/) to [Reports](./rep
 
 ### Support
 - Check out our [Documentation](https://docs.datapane.com)
-- [Join us on Discord](https://chat.datapane.com) and we'll help
+- [Read our forums](https://forum.datapane.com/)
