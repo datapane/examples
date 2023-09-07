@@ -4,11 +4,8 @@
   </a>
 </p>
 <p align="center">
-  <a href="https://datapane.com">Home</a> |
   <a href="https://docs.datapane.com">Docs</a> |
-  <a href="https://datapane.com/gallery">Gallery</a> |
-  <a href="https://github.com/datapane/examples">Examples</a> |
-  <a href="https://forum.datapane.com">Discuss</a>
+  <a href="https://github.com/datapane/datapane">Source</a>
 </p>
 <p align='center'>
   <a href="https://pypi.org/project/datapane/">
@@ -24,37 +21,26 @@
 
 ---
 
+### NOTE: Datapane is no longer actively maintained.
+
+This project is archived and kept for reference purposes only.
+
+Thank You.
+
 ## Welcome to Datapane's Examples Repository
 
 Hi there! 👋
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=587390080&devcontainer_path=.devcontainer%2Fdevcontainer.json)
 
-This repository contains a collection of examples that demonstrate how to use Datapane to create and share data reports and apps.
+This repository contains a collection of examples that demonstrate how to use Datapane to create and share data reports.
 
 1. Run `pip install -r requirements.txt` from an example folder to install dependencies.
 1. Depending on the format of the example, either run:
     - the notebook, e.g. `app.ipynb`, through Jupyter Lab,
     - the script, e.g. `python app.py`
-1. View the output, either,
-    - For Apps, visit the URL printed to the terminal/cell output, usually http://127.0.0.1:8080.
-    - For Reports, open the saved report locally or the uploaded report on Datapane Clodd
+1. Open the saved report locally
 
-### Apps
-
-- [Airport Mapper](./apps/airport-mapper/app.py)
-- [Image Background Remover](./apps/background-remover/app.py)
-- [ChatGPT Powered Analysis](./apps/chatgpt-analyzer/app.py)
-- [Data Scatterplot](./apps/dataset-scatterplot/app.py)
-- [Datatable Demo](./apps/datatable-demo/app.py)
-- [Google Trends](./apps/google-trends/app.py)
-- [Image Pipeline Articulation](./apps/image-pipeline-articulation/app.ipynb)
-- [Iris Plotter](./apps/iris-plotter/app.py)
-- [Startup Calculator](./apps/startup-calculator/app.py)
-- [Stock Dashboard](./apps/stock-dashboard/app.py)
-- [Stock Reporting](./apps/stock-reporting/app.py)
-- [Stock Ticker](./apps/stock-ticker/app.py)
-- [Kaggle Survey Analysis](./apps/survey-data-app/app.ipynb)
 
 ### Reports
 
@@ -73,10 +59,7 @@ This repository contains a collection of examples that demonstrate how to use Da
 
 We're here to help you get up and running with Datapane. Check out the [Datapane quickstart repo](https://github.com/datapane/dp-quickstart/) to get started, or visit any of the resources below.
 
-- [View Examples](https://github.com/datapane/examples)
 - [Read the documentation](https://docs.datapane.com)
-- [Discuss with the community](https://forum.datapane.com/)
-- [Sign up for a free Cloud account](https://cloud.datapane.com/accounts/signup)
 
 ## What makes Datapane special?
 

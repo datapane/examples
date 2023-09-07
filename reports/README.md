@@ -1,5 +1,5 @@
 # Datapane Demos
-In this repository, you'll find various examples and demos which demonstrate how to use [Datapane](https://datapane.com). 
+In this repository, you'll find various examples and demos which demonstrate how to use Datapane.
 
 ## Hello World
 Learn how to use Datapane to create and publish an interactive map to plot COVID data in your country.

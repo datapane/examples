@@ -1,4 +1,0 @@
--r requirements-base.txt
-Pillow
-# rembg not supported on py3.11
-rembg
